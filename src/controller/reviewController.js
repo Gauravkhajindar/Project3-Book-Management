@@ -68,7 +68,9 @@ const updateReview = async (req,res)=>{
 
         if(!regEx.test(req.body.review)) return res.status(400).send({ status: false, message: "review text is invalid it must be alphabet " });
 
+        if(req.body.rating){
         if(typeof req.body.rating !== "number" ||  (req.body.rating <= 0) || (req.body.rating > 5) ) return res.status(400).send({ status: false, message: " you can rate only 1 to 5 " });
+        }
 
         if(!(mongoose.isValidObjectId(bookId))) return res.status(400).send({ status: false, message: "Please Enter Valid BoodId." })
 

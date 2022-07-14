@@ -109,8 +109,9 @@ const getBook = async function (req, res) {
                 return res.status(400).send({ status: false, msg: 'Please enter valid userId' })
         }
 
-        const findBook = await bookModel.find({ $and: [data, { isDeleted: false }] }).select({ title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 }).sort({ title: 1 })
+        const findBook = await bookModel.find({ $and: [req.query, { isDeleted: false }] }).select({ title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 })
 
+        findBook.sort((a,b)=>a.title.localeCompare(b.title))
         if (!findBook.length) return res.status(404).send({ status: false, message: 'Book is Not found' })
 
         return res.status(200).send({ status: false, message: 'All Book Successfull', data: findBook })
