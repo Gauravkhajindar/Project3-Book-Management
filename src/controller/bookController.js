@@ -114,7 +114,7 @@ const getBook = async function (req, res) {
         findBook.sort((a,b)=>a.title.localeCompare(b.title))
         if (!findBook.length) return res.status(404).send({ status: false, message: 'Book is Not found' })
 
-        return res.status(200).send({ status: false, message: 'All Book Successfull', data: findBook })
+        return res.status(200).send({ status: true, message: 'All Book Successfull', data: findBook })
 
     } catch (err) {
         res.status(500).send({ status: false, message: err.message })
@@ -165,6 +165,10 @@ const updateBook = async function (req, res) {
                 return res.status(400).send({ status: false, msg: "Please enter valid title" })
             }
         }
+        if ( title.trim().length==0 ) {
+            return res.status(400).send({ status: false, msg: "Please enter valid title" })
+        }
+
 
         if (excerpt) {
             if (!isValid(excerpt)) {

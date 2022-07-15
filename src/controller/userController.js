@@ -77,7 +77,8 @@ const registerUser = async function (req, res) {
         }
 
         if(Array.isArray(userDetails.address) )  return res.status(400).send({ status: false, msg: " address is in Object format." })
-
+        
+        if(userDetails.address){
         if (!isValid(userDetails.address.city )) {
             return res.status(400).send({ status: false, msg: "Please enter city." })
         }
@@ -97,6 +98,7 @@ const registerUser = async function (req, res) {
                 return res.status(400).send({ status: false, msg: "Please enter pincode in number or only 6 digit" })
             }
         }
+    }
         let registerNow = await usersModel.create(userDetails)
         res.status(201).send({ status: true, data: registerNow })
     }
